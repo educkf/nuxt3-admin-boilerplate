@@ -21,6 +21,8 @@ if (process.client) {
 <template>
     <div>
         <AppNotification />
-        <NuxtPage />
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
     </div>
 </template>

@@ -2,8 +2,8 @@
 import { reactive, ref, onBeforeMount } from 'vue'
 import cryptojs from 'crypto-js'
 
-import { useUser } from '../store/user'
-import { useNotifications } from '../store/notifications'
+import { useUser } from '../../store/user'
+import { useNotifications } from '../../store/notifications'
 
 const config = useRuntimeConfig()
 const notificationStore = useNotifications()
@@ -12,7 +12,7 @@ const router = useRouter()
 
 onBeforeMount(() => {
     if (userStore.token) {
-        router.replace({ path: "/" })
+        router.replace({ path: "/admin" })
     }
 })
 
@@ -51,9 +51,18 @@ async function handleSubmit() {
             }])
             localStorage.setItem(
                 `${config.projectId}-user`,
-                JSON.stringify(data)
+                JSON.stringify({
+                    user: data.user,
+                    token: data.token
+                })
             )
-            router.replace({ path: "/" })
+            userStore.set({
+                user: data.user,
+                token: data.token
+            })
+            setTimeout(() => {
+                router.replace({ path: "/admin" })
+            }, 500)
 
         } else {
             notificationStore.add([{
