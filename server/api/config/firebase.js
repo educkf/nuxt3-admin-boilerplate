@@ -1,11 +1,14 @@
-// import { initializeApp, applicationDefault } from 'firebase-admin/app';
-// import { getFirestore } from 'firebase-admin/firestore';
+import { initializeApp, applicationDefault } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
-// initializeApp({
-//     credential: applicationDefault(),
-//     projectId: process.env.FIREBASE_ID
-// });
+// set firebase application credentials
+// https://cloud.google.com/docs/authentication/getting-started
+// example (windows):
+// $env:GOOGLE_APPLICATION_CREDENTIALS="..\nuxt3-boilerplate-credentials.json"
 
-// export const db = getFirestore();
+initializeApp({
+    credential: applicationDefault(),
+    projectId: process.env.FIREBASE_ID
+});
 
-export const db = true
+export const db = getFirestore();

@@ -8,6 +8,7 @@ export default defineNuxtConfig({
 
     publicRuntimeConfig: {
         hashKey: process.env.HASHKEY,
-        project: process.env.PROJECT
+        project: process.env.PROJECT,
+        projectId: process.env.PROJECT_ID,
     }
 })

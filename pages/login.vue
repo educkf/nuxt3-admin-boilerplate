@@ -1,12 +1,20 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onBeforeMount } from 'vue'
 import cryptojs from 'crypto-js'
+
+import { useUser } from '../store/user'
 import { useNotifications } from '../store/notifications'
 
 const config = useRuntimeConfig()
-const notifications = useNotifications()
+const notificationStore = useNotifications()
+const userStore = useUser()
+const router = useRouter()
 
-console.log(notifications.list)
+onBeforeMount(() => {
+    if (userStore.token) {
+        router.replace({ path: "/" })
+    }
+})
 
 const loading = ref(false)
 const user = reactive({
@@ -18,9 +26,16 @@ async function handleSubmit() {
     loading.value = true
 
     try {
+        var sha256 = cryptojs.algo.SHA256
+            .create()
+            .update(user.username)
+            .update(user.password)
+
+        const hash = sha256.finalize()
+
         const body = {
             user: user.username,
-            password: cryptojs.AES.encrypt(user.password, config.hashKey).toString()
+            password: hash.toString()
         }
 
         const data = await $fetch('/api/auth/login', {
@@ -29,23 +44,32 @@ async function handleSubmit() {
         })
 
         if (data?.success) {
-            console.log('deu certo')
-            notifications.add([{
+            notificationStore.add([{
                 title: 'Sucesso!',
                 description: 'Login realizado com sucesso.',
                 icon: 'success'
             }])
+            localStorage.setItem(
+                `${config.projectId}-user`,
+                JSON.stringify(data)
+            )
+            router.replace({ path: "/" })
 
         } else {
-            notifications.add([{
-                title: 'Ops!',
-                description: 'Aconteceu um erro ao tentar realizar seu login.',
+            notificationStore.add([{
+                title: 'Login não autorizado',
+                description: 'Verifique seu usuário e senha, e tente novamente.',
                 icon: 'error'
             }])
         }
 
     } catch (err) {
         console.log({ err })
+        notificationStore.add([{
+            title: 'Ops!',
+            description: 'Aconteceu um erro ao tentar realizar seu login.',
+            icon: 'error'
+        }])
     }
 
     loading.value = false
