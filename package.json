@@ -1,21 +1,25 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview"
-  },
-  "devDependencies": {
-    "@nuxtjs/tailwindcss": "^5.3.2",
-    "nuxt": "3.0.0-rc.8"
-  },
-  "dependencies": {
-    "@pinia/nuxt": "^0.4.1",
-    "crypto-js": "^4.1.1",
-    "firebase-admin": "^11.0.1",
-    "jsonwebtoken": "^8.5.1",
-    "pinia": "^2.0.20",
-    "uuid": "^8.3.2"
-  }
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^5.3.2",
+        "nuxt": "3.0.0-rc.8"
+    },
+    "engines": {
+        "node": "14"
+    },
+    "dependencies": {
+        "@pinia/nuxt": "^0.4.1",
+        "crypto-js": "^4.1.1",
+        "firebase-admin": "^11.0.1",
+        "firebase-functions": "^3.22.0",
+        "jsonwebtoken": "^8.5.1",
+        "pinia": "^2.0.20",
+        "uuid": "^8.3.2"
+    }
 }
