@@ -1,13 +1,24 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue'
-import { useUser } from '../store/user'
+import { useUser, useSettings } from '../store'
+import AdminMenu from '../components/admin-menu.vue'
 
 const userStore = useUser()
+const settings = useSettings()
 const router = useRouter()
 
-onBeforeMount(() => {
+const adminMenu = computed(() => settings.adminMenu)
+
+onBeforeMount(async () => {
     if (!userStore.token) {
         router.replace({ path: "/admin/login" })
+
+    } else {
+        const data = await $fetch('/api/list/settings', { method: 'GET' })
+
+        if (data?.success) {
+            settings.set(data.settings)
+        }
     }
 })
 
@@ -15,7 +26,12 @@ onBeforeMount(() => {
 
 <template>
     <div>
-        <h1>Dashboard</h1>
-        <slot />
+        <div v-if="adminMenu.length > 0">
+            <AdminMenu />
+        </div>
+
+        <div>
+            <slot />
+        </div>
     </div>
 </template>

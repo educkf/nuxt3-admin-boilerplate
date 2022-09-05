@@ -11,6 +11,13 @@ export const useUser = defineStore('user', {
         set({ user, token }) {
             this.user = user
             this.token = token
+        },
+
+        logout() {
+            const config = useRuntimeConfig()
+            localStorage.removeItem(`${config.projectId}-user`)
+            this.user = user
+            this.token = token
         }
     }
 })

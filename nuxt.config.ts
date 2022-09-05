@@ -1,3 +1,5 @@
+// $env:GOOGLE_APPLICATION_CREDENTIALS="../nuxt3-boilerplate-credentials.json"
+
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
