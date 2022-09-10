@@ -1,50 +1,39 @@
 <template>
-    <component
-        v-bind:is="iconsRef[name]"
-        :attr="attr"
-    />
+    <component :is="name" :attr="attr" />
 </template>
 
 <script>
-    import Icons, { iconsRef } from "./icons";
+export default {
+    name: "Icon",
 
-    export default {
-        name: "Icon",
+    props: {
+        name: {
+            type: String,
+            required: true,
+            default: 'home'
+        },
+        type: {
+            type: String,
+            default: 'outline'
+        },
+        className: {
+            type: String,
+            default: 'outline'
+        },
+    },
 
-        components: {
-            ...Icons
+    computed: {
+        iconsRef() {
+            return iconsRef;
         },
 
-        props: {
-            name: {
-                type: String,
-                required: true,
-                default: 'home'
-            },
-            type: {
-                type: String,
-                default: 'outline'
-            },
-            className: {
-                type: String,
-                default: 'outline'
-            },
-        },
-
-        computed: {
-            iconsRef() {
-                return iconsRef;
-            },
-
-            attr() {
-                return {
-                    name: this.name,
-                    type: this.type,
-                    className: this.className
-                }
+        attr() {
+            return {
+                name: this.name,
+                type: this.type,
+                className: this.className
             }
         }
-    };
+    }
+}
 </script>
-
-<style></style>

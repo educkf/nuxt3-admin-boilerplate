@@ -12,5 +12,15 @@ export default defineNuxtConfig({
         hashKey: process.env.HASHKEY,
         project: process.env.PROJECT,
         projectId: process.env.PROJECT_ID,
+    },
+
+    components: {
+        dirs: [
+            {
+                path: "~/components/icons",
+                global: true
+            },
+            "~/components"
+        ]
     }
 })
