@@ -1,6 +1,5 @@
 <script setup>
 import { useSettings } from '../store'
-import AppIcon from './app-icon.vue';
 const route = useRoute()
 
 const settings = useSettings()

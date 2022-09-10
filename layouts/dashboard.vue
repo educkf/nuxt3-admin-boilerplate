@@ -25,13 +25,20 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    <div>
-        <div v-if="adminMenu.length > 0">
-            <AdminMenu />
-        </div>
+    <div class="h-screen bg-gray-50 flex overflow-hidden">
+        <AdminMenu v-if="adminMenu.length > 0" />
 
-        <div>
-            <slot />
+        <!-- Content area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <AdminHeader />
+
+            <div id="main-view" class="flex-1 flex items-stretch overflow-hidden">
+                <main class="flex-1 overflow-y-auto">
+                    <section aria-labelledby="primary-heading" class="min-w-0  lg:order-last">
+                        <slot />
+                    </section>
+                </main>
+            </div>
         </div>
     </div>
 </template>
